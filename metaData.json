@@ -1,0 +1,12 @@
+{
+  "/": {
+    "title": "Главная страница",
+    "description": "Это главная страница",
+    "keywords": "React, Node.js, Express"
+  },
+  "/about": {
+    "title": "О нас",
+    "description": "Это страница О нас",
+    "keywords": "React, Node.js, Express, About"
+  }
+}
