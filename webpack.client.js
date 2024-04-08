@@ -1,14 +1,11 @@
-// webpack.client.js
-
 const path = require('path');
 
 module.exports = {
-    entry: './client.js',
-    mode: 'development',
+    entry: './client/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'client.bundle.js',
-        publicPath: '/',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -21,7 +18,10 @@ module.exports = {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
                     },
                 },
-            },
-        ],
+            }
+        ]
     },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    }
 };
