@@ -1,17 +1,17 @@
 require('dotenv').config();
-
-import {StaticRouter} from "react-router-dom/server";
-import { createServerContext } from "use-sse";
-import { renderToPipeableStream, renderToString } from "react-dom/server";
-import pageParts from "../index.html.js";
-
 const PORT = process.env.PORT;
 const React = require('react');
 const express = require('express');
 const app = express();
 const App = require('../src/App.jsx').default;
-const entry = [pageParts]
 
+import {Helmet} from "react-helmet";
+import {StaticRouter} from "react-router-dom/server";
+import { createServerContext } from "use-sse";
+import { renderToPipeableStream, renderToString } from "react-dom/server";
+
+
+app.use('/public', express.static('../public'));
 app.use("/", async (req, res) => {
     const { ServerDataContext, resolveData } = createServerContext();
 
@@ -22,34 +22,33 @@ app.use("/", async (req, res) => {
             </StaticRouter>
         </ServerDataContext>
     );
+    const data = await resolveData();
+    console.log(data);
+    // Inject into html initial data
+    const helmet = Helmet.renderStatic();
+    const htmlAttrs = helmet.htmlAttributes.toComponent();
+    const bodyAttrs = helmet.bodyAttributes.toComponent();
 
     const { pipe, abort: _abort } = renderToPipeableStream(
         <ServerDataContext>
             <StaticRouter location={req.url}>
-                <App />
+                <App/>
             </StaticRouter>
         </ServerDataContext>
         ,{
             bootstrapScripts: [],
             onShellReady() {
-                res.statusCode = 200;
-                res.setHeader("Content-type", "text/html");
-                pipe(res);
-            },
+            res.statusCode = 200;
+            res.setHeader("Content-type", "text/html");
+            res.write(data.toHtml());
+            pipe(res);
+        },
             onShellError() {
-                res.statusCode = 500;
-                res.send("<!doctype html><p>Loading...</p>");
-            },
+            res.statusCode = 500;
+            res.send("<!doctype html><p>Loading...</p>");
+        },
         }
     );
-
-    // htmlStream.pipe(res, { end: false });
-    // htmlStream.on("end", () => {
-    //     res.write(pageParts[1]);
-    //     res.write(data.toHtml());
-    //     res.write(pageParts[2]);
-    //     res.end();
-    // });
 });
 
 app.listen(PORT, () => {
