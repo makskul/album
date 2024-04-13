@@ -24,7 +24,7 @@ app.use("/", async (req, res) => {
     const { ServerDataContext, resolveData } = createServerContext();
     const helmetContext = {};
 
-    const ClientApp = (
+    const JSX = (
         <ServerDataContext>
             <HelmetProvider context={helmetContext}>
                 <StaticRouter location={req.url}>
@@ -34,10 +34,10 @@ app.use("/", async (req, res) => {
         </ServerDataContext>
     );
 
-    renderToString(ClientApp);
+    renderToString(JSX);
     const data = await resolveData();
 
-    const stream = renderToPipeableStream(ClientApp, {
+    const stream = renderToPipeableStream(JSX, {
         async onAllReady() {
             res.write(data.toHtml());
             res.end('</div><script src="client.bundle.js"></script></body></html>');

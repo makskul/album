@@ -3,8 +3,12 @@ import * as config from '/constants';
 import axios from "axios";
 import { useSSE } from "use-sse";
 import PageTitle from "../components/PageTitle";
+import PageMeta from "../components/Meta/PageMeta";
+import { useLocation } from "react-router-dom";
+import {getPathName} from "../utils";
 
 function Home() {
+
     const url = "https://jsonplaceholder.typicode.com/users";
     const [counter, setCounter] = useState(0)
     const [users, error] = useSSE(async() => {
@@ -18,7 +22,6 @@ function Home() {
 
     return (
         <>
-            <PageTitle pageType={'home'} />
             <div>
                 <h2>Users block</h2>
                 {users && users.map(post => (

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import AppMeta from "./Meta/AppMeta";
 
 const Header = () => {
     return (
@@ -14,6 +15,7 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
+            <AppMeta />
         </header>
     )
 };

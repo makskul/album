@@ -24,9 +24,11 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-    ],
+    devServer: {
+        hot: true, // Включаем горячую перезагрузку
+        static: path.resolve(__dirname, 'src'), // Директория, где находятся статические файлы
+        port: 3001, // Порт dev server
+    },
     resolve: {
         extensions: ['.js', '.jsx']
     }
