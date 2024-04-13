@@ -5,18 +5,20 @@
 // hydrateRoot(document.getElementById("root"), <App />);
 
 import React from "react";
-import { hydrate } from "react-dom";
+import { hydrateRoot } from 'react-dom/client';
 import App from "../src/App.jsx";
 import { createBroswerContext } from "use-sse";
-import {BrowserRouter} from "react-router-dom";
-import Layout from "../src/Layout";
+import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter } from 'react-router-dom';
 const BrowserDataContext = createBroswerContext();
 
-hydrate(
+hydrateRoot(
+    document.getElementById("app"),
     <BrowserDataContext>
-        <BrowserRouter path="/" element={<Layout />}>
-            <App />
-        </BrowserRouter>
-    </BrowserDataContext>,
-    document.getElementById("app")
+        <HelmetProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </HelmetProvider>
+    </BrowserDataContext>
 );

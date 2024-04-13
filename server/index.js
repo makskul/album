@@ -1,54 +1,56 @@
+import template from "./template";
+
 require('dotenv').config();
 const PORT = process.env.PORT;
 const React = require('react');
 const express = require('express');
+const favicon = require('express-favicon');
 const app = express();
 const App = require('../src/App.jsx').default;
 
-import {Helmet} from "react-helmet";
-import {StaticRouter} from "react-router-dom/server";
+import { StaticRouter } from "react-router-dom/server";
 import { createServerContext } from "use-sse";
+import { HelmetProvider } from 'react-helmet-async';
 import { renderToPipeableStream, renderToString } from "react-dom/server";
+import * as path from "path";
 
+const BUILD_DIRECTORY = path.join(__dirname);
+const year = 1000 * 60 * 60 * 24 * 365;
+app.use(favicon(path.join(__dirname, '../public/favicon.ico')));
+app.use(express.static(__dirname + '../public'));
+app.use(express.static(path.join(BUILD_DIRECTORY), { maxAge: year, index: false }));
 
-app.use('/public', express.static('../public'));
 app.use("/", async (req, res) => {
     const { ServerDataContext, resolveData } = createServerContext();
+    const helmetContext = {};
 
-    renderToString(
+    const ClientApp = (
         <ServerDataContext>
-            <StaticRouter location={req.url}>
-                <App />
-            </StaticRouter>
+            <HelmetProvider context={helmetContext}>
+                <StaticRouter location={req.url}>
+                    <App />
+                </StaticRouter>
+            </HelmetProvider>
         </ServerDataContext>
     );
+
+    renderToString(ClientApp);
     const data = await resolveData();
-    console.log(data);
-    // Inject into html initial data
-    const helmet = Helmet.renderStatic();
-    const htmlAttrs = helmet.htmlAttributes.toComponent();
-    const bodyAttrs = helmet.bodyAttributes.toComponent();
 
-    const { pipe, abort: _abort } = renderToPipeableStream(
-        <ServerDataContext>
-            <StaticRouter location={req.url}>
-                <App/>
-            </StaticRouter>
-        </ServerDataContext>
-        ,{
-            bootstrapScripts: [],
-            onShellReady() {
-            res.statusCode = 200;
-            res.setHeader("Content-type", "text/html");
+    const stream = renderToPipeableStream(ClientApp, {
+        async onAllReady() {
             res.write(data.toHtml());
-            pipe(res);
+            res.end('</div><script src="client.bundle.js"></script></body></html>');
         },
-            onShellError() {
-            res.statusCode = 500;
-            res.send("<!doctype html><p>Loading...</p>");
-        },
-        }
-    );
+    });
+
+    res.write('<!DOCTYPE html><html lang="en"><head>');
+
+    const { helmet } = helmetContext;
+    const head = helmet ? helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() : '';
+    res.write(head);
+    res.write('</head><body><div id="app">');
+    stream.pipe(res);
 });
 
 app.listen(PORT, () => {
