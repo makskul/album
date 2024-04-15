@@ -13,7 +13,7 @@ function Template() {
                 <div id="app">
                     <App />
                 </div>
-                <script src='client.bundle.js'></script>
+                <script src='/client.bundle.js'></script>
             </body>
         </html>
     )

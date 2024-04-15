@@ -36,7 +36,9 @@ function About() {
             <h2>Languages which I know</h2>
             <ul>
                 <li>Russian and Ukrainian - Native</li>
-                <li>English - more then just intermediate, by to hard say that I know on Upper-Intermediate level
+                <li>
+                    English - more then just intermediate,
+                    but it's to hard for me, to say that I know language on Upper-Intermediate level
                 </li>
                 <li>Deutsch - elementary - A1</li>
             </ul>

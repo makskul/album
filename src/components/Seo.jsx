@@ -5,8 +5,7 @@ import { getPathName } from "../utils";
 import { useLocation } from "react-router-dom";
 
 const Seo = () => {
-    const pageName = getPathName(useLocation().pathname);
-
+    const pageName = getPathName();
     return (
         <>
             <PageMeta  pageType={pageName} />

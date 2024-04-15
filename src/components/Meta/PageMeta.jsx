@@ -6,7 +6,6 @@ import * as config from "../../../constants";
 * props: { pageType: string, replacer: string }
 */
 function PageMeta(props) {
-    console.log(props.pageType);
     return (
         <>
             <Helmet>

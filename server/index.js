@@ -1,12 +1,9 @@
-import template from "./template";
-
 require('dotenv').config();
 const PORT = process.env.PORT;
 const React = require('react');
 const express = require('express');
 const favicon = require('express-favicon');
 const app = express();
-
 
 import { StaticRouter } from "react-router-dom/server";
 import { createServerContext } from "use-sse";
@@ -42,10 +39,7 @@ app.use("/", async (req, res) => {
             res.setHeader('content-type', 'text/html');
             res.write(data.toHtml());
             pipe(res);
-        },
-        async onAllReady() {
-            ///res.end('</div><div id="app"><script src="client.bundle.js"></script></body></html>');
-        },
+        }
     });
 });
 
