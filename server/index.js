@@ -6,13 +6,14 @@ const React = require('react');
 const express = require('express');
 const favicon = require('express-favicon');
 const app = express();
-const App = require('../src/App.jsx').default;
+
 
 import { StaticRouter } from "react-router-dom/server";
 import { createServerContext } from "use-sse";
 import { HelmetProvider } from 'react-helmet-async';
 import { renderToPipeableStream, renderToString } from "react-dom/server";
 import * as path from "path";
+import Template from "./template";
 
 const BUILD_DIRECTORY = path.join(__dirname);
 const year = 1000 * 60 * 60 * 24 * 365;
@@ -28,29 +29,24 @@ app.use("/", async (req, res) => {
         <ServerDataContext>
             <HelmetProvider context={helmetContext}>
                 <StaticRouter location={req.url}>
-                    <App />
+                    <Template />
                 </StaticRouter>
             </HelmetProvider>
         </ServerDataContext>
     );
-
     renderToString(JSX);
-    const data = await resolveData();
 
-    const stream = renderToPipeableStream(JSX, {
-        async onAllReady() {
+    const data = await resolveData();
+    const { pipe } = renderToPipeableStream(JSX, {
+        onShellReady() {
+            res.setHeader('content-type', 'text/html');
             res.write(data.toHtml());
-            res.end('</div><script src="client.bundle.js"></script></body></html>');
+            pipe(res);
+        },
+        async onAllReady() {
+            ///res.end('</div><div id="app"><script src="client.bundle.js"></script></body></html>');
         },
     });
-
-    res.write('<!DOCTYPE html><html lang="en"><head>');
-
-    const { helmet } = helmetContext;
-    const head = helmet ? helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() : '';
-    res.write(head);
-    res.write('</head><body><div id="app">');
-    stream.pipe(res);
 });
 
 app.listen(PORT, () => {

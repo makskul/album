@@ -1,16 +1,22 @@
-function template(props) {
-    return `
-        <!DOCTYPE html>
-        <html lang="en">
+import React from "react";
+import App from "../src/App";
+
+function Template() {
+    return (
+        <html>
             <head>
-                ${props.head}
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <title>SSR React 18 example</title>
             </head>
             <body>
-                <div id="app" class="jump">${props.AppClient}</div>
+                <div id="app">
+                    <App />
+                </div>
+                <script src='client.bundle.js'></script>
             </body>
-            <script src="client.bundle.js" async></script>
         </html>
-    `
+    )
 }
 
-export default template
+export default Template

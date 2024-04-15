@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route } from "react-router-dom";
 
 // Pages
@@ -8,14 +8,12 @@ import Layout from "./Layout";
 
 function App() {
     return (
-        <Suspense fallback={'::::::'}>
-            <Routes>
-                <Route path="/" element={<Layout />} >
-                    <Route index element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                </Route>
-            </Routes>
-        </Suspense>
+        <Routes>
+            <Route path="/" element={<Layout />} >
+                <Route index element={<Home />} />
+                <Route path="/about" element={<About />} />
+            </Route>
+        </Routes>
     );
 }
 

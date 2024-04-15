@@ -15,33 +15,31 @@ function About() {
                 stack, and ready to learn new <br/>
                 technologies.
             </p>
-            <p>
-                <h2>What about my skills ?</h2>
-                <ul>
-                    <li>Sass</li>
-                    <li>Js</li>
-                    <li>Webpack</li>
-                    <li>Smarty</li>
-                    <li>Twig</li>
-                    <li>Docker</li>
-                    <li>Vue</li>
-                    <li>Nuxt</li>
-                    <li>Bootstrap</li>
-                    <li>React</li>
-                </ul>
-            </p>
+            <h2>What about my skills ?</h2>
+            <ul>
+                <li>Sass</li>
+                <li>Js</li>
+                <li>Webpack</li>
+                <li>Smarty</li>
+                <li>Twig</li>
+                <li>Docker</li>
+                <li>Vue</li>
+                <li>Nuxt</li>
+                <li>Bootstrap</li>
+                <li>React</li>
+            </ul>
             <p>
                 Also i was worked at least of projects for support they in common sense.<br/>
-                They are wrote on Node Js + React + Webpack. And I was make a little features and fixes by technical tasks.
+                They are wrote on Node Js + React + Webpack. And I was make a little features and fixes by technical
+                tasks.
             </p>
-            <p>
-                <h2>Languages which I know</h2>
-                <ul>
-                    <li>Russian and Ukrainian - Native</li>
-                    <li>English - more then just intermediate, by to hard say that I know on Upper-Intermediate level</li>
-                    <li>Deutsch - elementary - A1</li>
-                </ul>
-            </p>
+            <h2>Languages which I know</h2>
+            <ul>
+                <li>Russian and Ukrainian - Native</li>
+                <li>English - more then just intermediate, by to hard say that I know on Upper-Intermediate level
+                </li>
+                <li>Deutsch - elementary - A1</li>
+            </ul>
         </div>
     );
 }
