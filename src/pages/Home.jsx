@@ -13,14 +13,16 @@ function Home() {
 
     return (
         <section>
-            <h2>Users</h2>
+            <h2 className={'text-2xl mb-2'}>Our Authors</h2>
             <Suspense fallback={'...............'}>
-                <div className="users-container">
+                <div className={'bg-gray-100'}>
                     {users && users.map(user => (
-                        <div key={user.id}>
+                        <div className={'flex justify-between border-b-2 border-b-white px-2 py-2'} key={user.id}>
                             {user.name}
-                            &nbsp;&nbsp;<Link to={`/posts?userId=${user.id}`}>Posts</Link>
-                            &nbsp;&nbsp;<Link to={`/albums?userId=${user.id}`}>Albums</Link>
+                            <div>
+                                &nbsp;&nbsp;<Link to={`/posts?userId=${user.id}`} className={'text-indigo-600'}>Posts</Link>
+                                &nbsp;/&nbsp;<Link to={`/albums?userId=${user.id}`} className={'text-indigo-600'}>Albums</Link>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -4,18 +4,20 @@ import AppMeta from "./Meta/AppMeta";
 
 const Header = () => {
     return (
-        <header>
+        <header className={'flex items-center justify-center py-4 px-5 mb-4 bg-indigo-600'}>
             <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
+                <ul className={'text-center'}>
+                    <li className={'inline-block mr-4'}>
+                        <Link to="/" className={'text-gray-50'}>Home</Link>
                     </li>
-                    <li>
-                        <Link to="/about">About Me</Link>
+                    <li className={'inline-block text-3xl ml-5 mr-5 text-gray-200'}>
+                        Share your Impressions
+                    </li>
+                    <li className={'inline-block ml-4'}>
+                        <Link to="/about" className={'text-gray-50'}>About Me</Link>
                     </li>
                 </ul>
             </nav>
-            <AppMeta />
         </header>
     )
 };

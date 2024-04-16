@@ -3,20 +3,16 @@ import PageMeta from "../components/Meta/PageMeta";
 import PageTitle from "../components/PageTitle";
 
 function About() {
-    const pageName = 'about';
     return (
-        <div>
-            <p>
-                Hello, My name is Maks Kul.
+        <div className={'bg-gray-100 p-4'}>
+            <p className={'mb-2'}>
+                Hello, My name is <b>Maks Kul</b>.
                 I'm a Highly skilled Frontend Developer with: <br/>
-                7+ years of experience. Proficient in <br/>
-                Sass, JavaScript, Typescript, React and <br/>
-                Vue. I want to continue working with this <br/>
-                stack, and ready to learn new <br/>
-                technologies.
+                7+ years of experience. Proficient in Sass, JavaScript, Typescript, React and Vue. <br />
+                I want to continue working with this stack, and ready to learn new technologies.
             </p>
-            <h2>What about my skills ?</h2>
-            <ul>
+            <h2 className={'font-semibold'}>What about my skills ?</h2>
+            <ul className={'list-disc list-inside mb-3'}>
                 <li>Sass</li>
                 <li>Js</li>
                 <li>Webpack</li>
@@ -28,13 +24,13 @@ function About() {
                 <li>Bootstrap</li>
                 <li>React</li>
             </ul>
-            <p>
+            <p className={'mb-2'}>
                 Also i was worked at least of projects for support they in common sense.<br/>
                 They are wrote on Node Js + React + Webpack. And I was make a little features and fixes by technical
                 tasks.
             </p>
-            <h2>Languages which I know</h2>
-            <ul>
+            <h2 className={'font-semibold'}>Languages which I know</h2>
+            <ul className={'list-disc list-inside mb-3'}>
                 <li>Russian and Ukrainian - Native</li>
                 <li>
                     English - more then just intermediate,

@@ -11,6 +11,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { renderToPipeableStream, renderToString } from "react-dom/server";
 import * as path from "path";
 import Template from "./template";
+import webpack from "webpack";
+
+var webpackConfig = require('../webpack.client.js');
+var compiler = webpack(webpackConfig);
 
 const BUILD_DIRECTORY = path.join(__dirname);
 const year = 1000 * 60 * 60 * 24 * 365;
@@ -18,6 +22,7 @@ app.use(favicon(path.join(__dirname, '../public/favicon.ico')));
 app.use(express.static(__dirname + '../public'));
 app.use(express.static(path.join(BUILD_DIRECTORY), { maxAge: year, index: false }));
 
+app.use(require("webpack-hot-middleware")(compiler));
 app.use("/", async (req, res) => {
     const { ServerDataContext, resolveData } = createServerContext();
     const helmetContext = {};

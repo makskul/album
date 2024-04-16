@@ -5,9 +5,7 @@ import {useSSE} from "use-sse";
 import axios from "axios";
 
 function Entity () {
-    const { slug } = useParams();
-    const url = getFetchUrl(slug , true);
-
+    const url = getFetchUrl();
     const [entity] = useSSE(async() => {
         const { data } = await axios(url);
         return data;
@@ -15,9 +13,8 @@ function Entity () {
 
     return (
         <>
-            <h2>Entity page</h2>
-            {entity && <h3>{entity.title}</h3>}
-            {entity && <div>{entity.body}</div>}
+            {entity && <h2 className={'text-2xl mb-2'}>{entity.title}</h2>}
+            {entity && entity.body && <div className={'bg-gray-100 p-4'}>{entity.body}</div>}
         </>
     )
 }

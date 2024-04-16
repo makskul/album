@@ -1,6 +1,5 @@
 require('dotenv').config();
 const path = require('path');
-const webpack = require("webpack");
 
 module.exports = {
     mode: process.env.MODE,
@@ -21,13 +20,13 @@ module.exports = {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
                     },
                 },
-            }
+            },
+            {
+                test: /\.css$/i,
+                include: path.resolve(__dirname, 'src'),
+                use: ['style-loader', 'css-loader', 'postcss-loader'],
+            },
         ]
-    },
-    devServer: {
-        hot: true, // Включаем горячую перезагрузку
-        static: path.resolve(__dirname, 'src'), // Директория, где находятся статические файлы
-        port: 3001, // Порт dev server
     },
     resolve: {
         extensions: ['.js', '.jsx']
