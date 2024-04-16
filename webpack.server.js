@@ -1,16 +1,17 @@
-// webpack.server.js
-
+require('dotenv').config();
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
+    mode: process.env.MODE,
     target: 'node',
-    entry: './server.js',
-    mode: 'development',
+    entry: './server/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'server.bundle.js',
         publicPath: '/',
     },
+    externals: [nodeExternals(), "react-helmet"],
     module: {
         rules: [
             {
@@ -25,4 +26,7 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    }
 };

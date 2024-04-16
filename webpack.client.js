@@ -1,14 +1,13 @@
-// webpack.client.js
-
+require('dotenv').config();
 const path = require('path');
 
 module.exports = {
-    entry: './client.js',
-    mode: 'development',
+    mode: process.env.MODE,
+    entry: './client/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'client.bundle.js',
-        publicPath: '/',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -22,6 +21,14 @@ module.exports = {
                     },
                 },
             },
-        ],
+            {
+                test: /\.css$/i,
+                include: path.resolve(__dirname, 'src'),
+                use: ['style-loader', 'css-loader', 'postcss-loader'],
+            },
+        ]
     },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    }
 };
