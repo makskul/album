@@ -7,18 +7,23 @@ export function getPathName() {
 }
 
 export function getFetchUrl() {
-    const pathname = getPathName() === 'home' ? 'users' : getPathName();
+    const urlPathName = getPathName() === 'home' ? 'users' : getPathName();
     const [searchParams] = useSearchParams();
     const paramUserId = searchParams.get('userId') || '';
+    const paramSearch = searchParams.get('search') || '';
     const { slug } = useParams();
+    const url = new URL(`https://jsonplaceholder.typicode.com/${urlPathName}`);
+    url.pathname = urlPathName;
 
-    if (slug && (pathname === 'posts' || pathname === 'albums')) {
-        return `https://jsonplaceholder.typicode.com/${pathname}/${slug}`;
+    if (slug && (urlPathName === 'posts' || urlPathName === 'albums')) {
+        url.pathname = `${urlPathName}/${slug}`;
+    } else if (urlPathName === 'posts' || urlPathName === 'albums') {
+        url.searchParams.append('userId', paramUserId);
     }
 
-    if (pathname === 'posts' || pathname === 'albums') {
-        return `https://jsonplaceholder.typicode.com/${pathname}?userId=${paramUserId}`;
+    if (urlPathName === 'users' && paramSearch) {
+        url.searchParams.append('username_like', paramSearch);
     }
 
-    return `https://jsonplaceholder.typicode.com/${pathname}`;
+    return url.href;
 }
